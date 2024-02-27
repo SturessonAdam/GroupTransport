@@ -106,7 +106,7 @@ public class GroupTransportController {
         }                                                              
 
         groupService.setVehicleBusy(groupId, vehicleId);
-        return ResponseEntity.ok().body("Fordonet satt till upptaget");
+        return ResponseEntity.ok().body("Fordonet med id " + vehicleId + " i grupp " + groupId + " satt till upptaget");
     }
 
 
