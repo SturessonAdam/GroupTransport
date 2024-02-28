@@ -2,9 +2,11 @@ package com.example.grouptransport.service;
 
 import com.example.grouptransport.model.API1.route.ComputedRoute;
 import com.example.grouptransport.model.Group;
+import com.example.grouptransport.model.GroupWalk;
 import com.example.grouptransport.model.User;
 import com.example.grouptransport.model.Vehicle;
 import com.example.grouptransport.repository.GroupRepository;
+import com.example.grouptransport.repository.GroupWalkRepository;
 import com.example.grouptransport.repository.UserRepository;
 import com.example.grouptransport.repository.VehicleRepository;
 import jakarta.transaction.Transactional;
@@ -26,6 +28,8 @@ public class GroupService {
     private UserRepository userRepository;
     @Autowired
     private VehicleRepository vehicleRepository;
+    @Autowired
+    private GroupWalkRepository groupWalkRepository;
 
     public Group createGroup(Group group, User user) {
         group.getUsers().add(user); //lägger till användaren i grupplistan
@@ -93,11 +97,25 @@ public class GroupService {
         }
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<ComputedRoute> route = restTemplate.getForEntity("https://tohemu23.azurewebsites.net/api/v1/routes/Car/Oskarshamn/Kalmar", ComputedRoute.class);
-        int busyForSeconds = route.getBody().getRoute().getTime().intValue();
+        int busyForSeconds = route.getBody().getRoute().getTime().intValue(); //hämtar rutten från Tobias API
 
         vehicle.setAvailable(false); //sätter fordonet upptaget
         vehicle.setBusyForSeconds(busyForSeconds); //sätter tiden i sekunder
         vehicleRepository.save(vehicle);
+    }
+
+    public GroupWalk registerGroupWalk(Long groupId) {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<ComputedRoute> route = restTemplate.getForEntity("https://tohemu23.azurewebsites.net/api/v1/routes/Foot/Oskarshamn/Kalmar", ComputedRoute.class);
+
+        String routeDetails = route.getBody().getRoute().getWaypoints().toString(); //hämtar rutten från Tobias API
+        GroupWalk groupWalk = new GroupWalk();
+        groupWalk.setRoute(routeDetails); //sätter rutten från Tobias API
+
+        Group group = groupRepository.findById(groupId).orElseThrow(() -> new RuntimeException("gruppen inte hittad"));
+        groupWalk.setGroup(group); //sätter grupp-promenaden till gruppen
+
+        return groupWalkRepository.save(groupWalk);
     }
 
 

@@ -2,6 +2,7 @@ package com.example.grouptransport.controller;
 
 import com.example.grouptransport.model.API1.route.ComputedRoute;
 import com.example.grouptransport.model.Group;
+import com.example.grouptransport.model.GroupWalk;
 import com.example.grouptransport.model.User;
 import com.example.grouptransport.model.Vehicle;
 import com.example.grouptransport.service.GroupService;
@@ -111,15 +112,14 @@ public class GroupTransportController {
 
 
     //*enpoint för att registrera grupp-promenader
+    @PostMapping("/{groupId}/registerGroupWalk")
+    public ResponseEntity<GroupWalk> registerGroupWalk(@PathVariable Long groupId){
+        GroupWalk newGroupWalk = groupService.registerGroupWalk(groupId);
+        return ResponseEntity.status(201).body(newGroupWalk);
+    }
 
     //*enpoint för att avregistrera promenader
 
     //*endpoint för att hämta grupp-promenader
-    //Promenadens rutt hämtas från tjänsten som hanterar enskild transport API 1 (Tobias).
-    /*@GetMapping("/{groupWalkId}/getGroupWalk")
-    public ResponseEntity<?> getGroupWalk(@PathVariable Long groupWalkId) {
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<ComputedRoute> route = restTemplate.getForEntity("https://tohemu23.azurewebsites.net/api/v1/routes/Foot/from/to", ComputedRoute.class);
-        route.getBody().getRoute().getWaypoints();
-    }    */
+
 }
