@@ -15,6 +15,8 @@ public class GroupWalk {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Lob
+    @Column(name = "route", columnDefinition="TEXT")
     private String route;
 
     @ManyToOne

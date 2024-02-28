@@ -90,6 +90,7 @@ public class GroupService {
         vehicleRepository.save(vehicle); //sparar fordonet utan att ha en grupp
     }
 
+    @Transactional
     public void setVehicleBusy(Long vehicleId, Long groupId) {
         Vehicle vehicle = vehicleRepository.findById(vehicleId).orElseThrow(() -> new RuntimeException("fordonet inte hittat"));
 
