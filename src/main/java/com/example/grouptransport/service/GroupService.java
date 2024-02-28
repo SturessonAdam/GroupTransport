@@ -108,7 +108,7 @@ public class GroupService {
 
     public GroupWalk registerGroupWalk(Long groupId) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Route> route = restTemplate.getForEntity("https://tohemu23.azurewebsites.net/api/v1/routes/Foot/Oskarshamn/Kalmar/raw", Route.class);
+        ResponseEntity<Route> route = restTemplate.getForEntity("https://tohemu23.azurewebsites.net/api/v1/routes/Foot/Oskarshamn/Svalliden/raw", Route.class);
 
         String routeDetails = route.getBody().getWaypoints().toString(); //hämtar rutten från Tobias API
         GroupWalk groupWalk = new GroupWalk();

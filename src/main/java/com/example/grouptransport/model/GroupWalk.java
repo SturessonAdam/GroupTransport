@@ -16,7 +16,7 @@ public class GroupWalk {
     private Long id;
 
     @Lob
-    @Column(name = "route", columnDefinition="TEXT")
+    @Column(name = "route", columnDefinition="LONGTEXT")
     private String route;
 
     @ManyToOne
