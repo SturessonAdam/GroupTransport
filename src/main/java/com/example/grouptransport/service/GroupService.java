@@ -1,6 +1,7 @@
 package com.example.grouptransport.service;
 
 import com.example.grouptransport.model.API1.route.ComputedRoute;
+import com.example.grouptransport.model.API1.route.Route;
 import com.example.grouptransport.model.Group;
 import com.example.grouptransport.model.GroupWalk;
 import com.example.grouptransport.model.User;
@@ -96,8 +97,8 @@ public class GroupService {
             throw new RuntimeException("fordonet tillhör inte denna grupp");
         }
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<ComputedRoute> route = restTemplate.getForEntity("https://tohemu23.azurewebsites.net/api/v1/routes/Car/Oskarshamn/Kalmar", ComputedRoute.class);
-        int busyForSeconds = route.getBody().getRoute().getTime().intValue(); //hämtar rutten från Tobias API
+        ResponseEntity<Route> route = restTemplate.getForEntity("https://tohemu23.azurewebsites.net/api/v1/routes/Car/Oskarshamn/Kalmar/raw", Route.class);
+        int busyForSeconds = route.getBody().getTime().intValue(); //hämtar rutten från Tobias API
 
         vehicle.setAvailable(false); //sätter fordonet upptaget
         vehicle.setBusyForSeconds(busyForSeconds); //sätter tiden i sekunder
@@ -106,9 +107,9 @@ public class GroupService {
 
     public GroupWalk registerGroupWalk(Long groupId) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<ComputedRoute> route = restTemplate.getForEntity("https://tohemu23.azurewebsites.net/api/v1/routes/Foot/Oskarshamn/Kalmar", ComputedRoute.class);
+        ResponseEntity<Route> route = restTemplate.getForEntity("https://tohemu23.azurewebsites.net/api/v1/routes/Foot/Oskarshamn/Kalmar/raw", Route.class);
 
-        String routeDetails = route.getBody().getRoute().getWaypoints().toString(); //hämtar rutten från Tobias API
+        String routeDetails = route.getBody().getWaypoints().toString(); //hämtar rutten från Tobias API
         GroupWalk groupWalk = new GroupWalk();
         groupWalk.setRoute(routeDetails); //sätter rutten från Tobias API
 
