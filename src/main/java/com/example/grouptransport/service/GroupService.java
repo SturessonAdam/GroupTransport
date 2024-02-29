@@ -116,5 +116,12 @@ public class GroupService {
         return groupWalkRepository.save(groupWalk);
     }
 
+    public void removeGroupWalk(Long groupId, Long groupWalkId){
+        GroupWalk groupWalk = groupWalkRepository.findByIdAndGroupId(groupWalkId, groupId)
+                .orElseThrow(() -> new RuntimeException("promenad eller grupp inte hittad"));
+        groupWalkRepository.delete(groupWalk);
+
+    }
+
 
 }

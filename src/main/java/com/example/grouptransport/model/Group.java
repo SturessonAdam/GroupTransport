@@ -30,4 +30,8 @@ public class Group {
     @JsonManagedReference
     private List<Vehicle> vehicles = new ArrayList<>();
 
+    @OneToMany(mappedBy = "group", fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<GroupWalk> groupWalk = new ArrayList<>();
+
 }

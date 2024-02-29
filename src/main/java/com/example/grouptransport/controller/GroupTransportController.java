@@ -113,6 +113,16 @@ public class GroupTransportController {
     }
 
     //*enpoint för att avregistrera promenader
+    @DeleteMapping("/{groupId}/removeGroupWalk/{groupwalkId}")
+    public ResponseEntity<?> removeGroupWalk(@RequestHeader("Username") String username, @PathVariable Long groupId, @PathVariable Long groupwalkId){
+         User requestingUser = userService.findUserByUsername(username);
+         if (requestingUser == null) {
+             return ResponseEntity.status(400).body(null);
+         }
+
+        groupService.removeGroupWalk(groupId, groupwalkId);
+        return ResponseEntity.ok().build();
+    }
 
     //*endpoint för att hämta grupp-promenader
 
