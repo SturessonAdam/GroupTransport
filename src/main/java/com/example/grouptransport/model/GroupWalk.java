@@ -1,5 +1,6 @@
 package com.example.grouptransport.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,5 +21,6 @@ public class GroupWalk {
     private String route;
 
     @ManyToOne
+    @JsonBackReference
     private Group group;
 }
