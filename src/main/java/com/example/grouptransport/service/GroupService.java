@@ -123,5 +123,11 @@ public class GroupService {
 
     }
 
+    public List<GroupWalk> getGroupWalks(Long groupId){
+        Group group = groupRepository.findById(groupId)
+                .orElseThrow(() -> new RuntimeException("gruppen inte hittad"));
+        return new ArrayList<>(group.getGroupWalk());
+    }
+
 
 }

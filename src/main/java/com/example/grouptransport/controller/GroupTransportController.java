@@ -121,9 +121,19 @@ public class GroupTransportController {
          }
 
         groupService.removeGroupWalk(groupId, groupwalkId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body("Grupp-promenaden med id "+groupwalkId+" är borttagen från grupp med id "+groupId);
     }
 
     //*endpoint för att hämta grupp-promenader
+    @GetMapping("/{groupId}/groupWalks")
+    public ResponseEntity<List<GroupWalk>> getGroupWalks(@RequestHeader("Username") String username, @PathVariable Long groupId) {
+        User requestingUser = userService.findUserByUsername(username);
+        if (requestingUser == null) {
+            return ResponseEntity.status(400).body(null);
+        }
+
+        List<GroupWalk> groupWalks = groupService.getGroupWalks(groupId);
+        return ResponseEntity.status(200).body(groupWalks);
+    }
 
 }
