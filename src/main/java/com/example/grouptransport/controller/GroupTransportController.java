@@ -1,15 +1,11 @@
 package com.example.grouptransport.controller;
 
 import com.example.grouptransport.model.*;
-import com.example.grouptransport.model.API1.route.ComputedRoute;
 import com.example.grouptransport.service.GroupService;
-import com.example.grouptransport.service.GroupWalkService;
 import com.example.grouptransport.service.UserService;
-import com.example.grouptransport.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -20,11 +16,7 @@ public class GroupTransportController {
     @Autowired
     private GroupService groupService;
     @Autowired
-    private GroupWalkService groupWalkService;
-    @Autowired
     private UserService userService;
-    @Autowired
-    private VehicleService vehicleService;
 
     //*enpoint för att registrera en användare som sedan personidentifieras i varje API anrop
     @PostMapping("/register")

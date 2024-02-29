@@ -1,7 +1,6 @@
 package com.example.grouptransport.service;
 
 import com.example.grouptransport.model.*;
-import com.example.grouptransport.model.API1.route.ComputedRoute;
 import com.example.grouptransport.model.API1.route.Route;
 import com.example.grouptransport.repository.GroupRepository;
 import com.example.grouptransport.repository.GroupWalkRepository;
