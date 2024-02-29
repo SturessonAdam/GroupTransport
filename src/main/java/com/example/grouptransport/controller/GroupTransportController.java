@@ -1,10 +1,7 @@
 package com.example.grouptransport.controller;
 
+import com.example.grouptransport.model.*;
 import com.example.grouptransport.model.API1.route.ComputedRoute;
-import com.example.grouptransport.model.Group;
-import com.example.grouptransport.model.GroupWalk;
-import com.example.grouptransport.model.User;
-import com.example.grouptransport.model.Vehicle;
 import com.example.grouptransport.service.GroupService;
 import com.example.grouptransport.service.GroupWalkService;
 import com.example.grouptransport.service.UserService;
@@ -100,13 +97,13 @@ public class GroupTransportController {
     //*enpoint för att sätta ett visst fordon i gruppen som är upptagen. Det ska även gå att sätta hur länge fordonet förväntas vara upptagen
     //Tiden ska utgå från en rutt hämtad från api:et som hanterar enskild transport API 1 (Tobias).
     @PostMapping("/{groupId}/vehicles/{vehicleId}/setVehicleBusy")
-    public ResponseEntity<?> setVehicleBusy(@RequestHeader("Username") String username, @PathVariable Long groupId, @PathVariable Long vehicleId){
+    public ResponseEntity<?> setVehicleBusy(@RequestHeader("Username") String username, @PathVariable Long groupId, @PathVariable Long vehicleId, @RequestBody RouteRequestDTO routeRequest){
         User requestingUser = userService.findUserByUsername(username);
         if (requestingUser == null) {
             return ResponseEntity.status(400).body(null);
         }                                                              
 
-        groupService.setVehicleBusy(groupId, vehicleId);
+        groupService.setVehicleBusy(groupId, vehicleId, routeRequest);
         return ResponseEntity.ok().body("Fordonet med id " + vehicleId + " i grupp " + groupId + " satt till upptaget");
     }
 

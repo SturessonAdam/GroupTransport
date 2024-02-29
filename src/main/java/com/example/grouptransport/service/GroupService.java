@@ -1,11 +1,8 @@
 package com.example.grouptransport.service;
 
+import com.example.grouptransport.model.*;
 import com.example.grouptransport.model.API1.route.ComputedRoute;
 import com.example.grouptransport.model.API1.route.Route;
-import com.example.grouptransport.model.Group;
-import com.example.grouptransport.model.GroupWalk;
-import com.example.grouptransport.model.User;
-import com.example.grouptransport.model.Vehicle;
 import com.example.grouptransport.repository.GroupRepository;
 import com.example.grouptransport.repository.GroupWalkRepository;
 import com.example.grouptransport.repository.UserRepository;
@@ -91,14 +88,14 @@ public class GroupService {
     }
 
     @Transactional
-    public void setVehicleBusy(Long vehicleId, Long groupId) {
+    public void setVehicleBusy(Long vehicleId, Long groupId, RouteRequestDTO routeRequest) {
         Vehicle vehicle = vehicleRepository.findById(vehicleId).orElseThrow(() -> new RuntimeException("fordonet inte hittat"));
 
         if (!vehicle.getGroup().getId().equals(groupId)) {
             throw new RuntimeException("fordonet tillhör inte denna grupp");
         }
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Route> route = restTemplate.getForEntity("https://tohemu23.azurewebsites.net/api/v1/routes/Car/Oskarshamn/Kalmar/raw", Route.class);
+        ResponseEntity<Route> route = restTemplate.getForEntity("https://tohemu23.azurewebsites.net/api/v1/routes/Car/"+routeRequest.getStartPos()+"/"+routeRequest.getEndLoc()+"/raw", Route.class);
         int busyForSeconds = route.getBody().getTime().intValue(); //hämtar rutten från Tobias API
 
         vehicle.setAvailable(false); //sätter fordonet upptaget
