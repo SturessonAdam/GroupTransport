@@ -110,8 +110,13 @@ public class GroupTransportController {
 
     //*enpoint för att registrera grupp-promenader
     @PostMapping("/{groupId}/registerGroupWalk")
-    public ResponseEntity<GroupWalk> registerGroupWalk(@PathVariable Long groupId){
-        GroupWalk newGroupWalk = groupService.registerGroupWalk(groupId);
+    public ResponseEntity<GroupWalk> registerGroupWalk(@RequestHeader("Username") String username, @PathVariable Long groupId, @RequestBody RouteRequestDTO routeRequest){
+        User requestingUser = userService.findUserByUsername(username);
+        if (requestingUser == null) {
+            return ResponseEntity.status(400).body(null);
+        }
+
+        GroupWalk newGroupWalk = groupService.registerGroupWalk(groupId, routeRequest);
         return ResponseEntity.status(201).body(newGroupWalk);
     }
 
